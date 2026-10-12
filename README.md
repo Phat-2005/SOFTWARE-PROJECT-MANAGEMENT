@@ -63,8 +63,86 @@ pytest
 | GET | `/docs` | Interactive API documentation |
 
 ## Environment variables
-
 | Name | Needed from | Meaning |
 |---|---|---|
 | `APP_NAME` | optional | Name shown by `/` |
 | `DATABASE_URL` | Week 4 | PostgreSQL connection string |
+
+
+## Run with Compose (Week 4)
+
+### Prerequisites
+
+- Git
+- Podman 4+ with a Compose provider, or Docker Desktop with Docker Compose
+
+### Steps
+
+1. Clone the repository using HTTPS:
+
+   ```bash
+   git clone https://github.com/Phat-2005/SOFTWARE-PROJECT-MANAGEMENT.git
+   cd SOFTWARE-PROJECT-MANAGEMENT
+   ```
+
+2. Create a local environment file.
+
+   On Windows PowerShell:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   On macOS/Linux:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Open `.env` and set `DB_PASSWORD` to an alphanumeric password. Do not commit `.env` to Git.
+
+4. Start the application and database:
+
+   ```bash
+   podman compose up --build
+   ```
+
+   If using Docker Desktop, use:
+
+   ```bash
+   docker compose up --build
+   ```
+
+5. Wait for the containers to start, then open:
+
+   `http://localhost:3000/health/db`
+
+   Expected response:
+
+   ```json
+   {"db":"ok","notes":2}
+   ```
+
+   The number of notes may vary depending on the database contents.
+
+6. Stop the containers:
+
+   ```bash
+   podman compose down
+   ```
+
+   With Docker Compose, use `docker compose down`.
+
+### Database persistence
+
+PostgreSQL data is stored in a named volume and persists when the containers are stopped. To remove the database volume and reset the database, run:
+
+```bash
+podman compose down -v
+```
+
+Use `docker compose down -v` if you are using Docker Compose.
+
+
+
+
