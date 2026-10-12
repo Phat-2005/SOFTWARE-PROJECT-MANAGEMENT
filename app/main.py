@@ -7,12 +7,14 @@ in a pipeline from Week 6.
 
 import os
 
+import psycopg
 from fastapi import FastAPI, HTTPException
 
 APP_NAME = os.getenv("APP_NAME", "sdp-starter")
 APP_VERSION = "0.1.0"
 
 app = FastAPI(title=APP_NAME, version=APP_VERSION)
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 # In-memory data. Week 4 replaces this with a PostgreSQL table.
 ITEMS = [
@@ -45,3 +47,12 @@ def get_item(item_id: int):
         if item["id"] == item_id:
             return item
     raise HTTPException(status_code=404, detail="Item not found")
+
+@app.get("/health/db")
+def health_db():
+    with psycopg.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT count(*) FROM notes")
+            n = cur.fetchone()[0]
+
+    return {"db": "ok", "notes": n}
