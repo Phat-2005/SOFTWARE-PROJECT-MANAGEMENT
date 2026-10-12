@@ -78,7 +78,7 @@ pytest
 
 ### Steps
 
-1. Clone the repository using HTTPS:
+1. Clone the repository using HTTPS and enter the repository folder:
 
    ```bash
    git clone https://github.com/Phat-2005/SOFTWARE-PROJECT-MANAGEMENT.git
@@ -101,7 +101,7 @@ pytest
 
 3. Open `.env` and set `DB_PASSWORD` to an alphanumeric password. Do not commit `.env` to Git.
 
-4. Start the application and database:
+4. Start the application and database from the repository root:
 
    ```bash
    podman compose up --build
@@ -113,19 +113,18 @@ pytest
    docker compose up --build
    ```
 
-5. Wait for the containers to start, then open:
+5. Wait for both containers to start, then open:
 
    `http://localhost:3000/health/db`
 
-  
-Expected response:
+   Expected response with a fresh database:
 
-```json
-{"db":"ok","notes":1}
-```
-
-
-   The number of notes may vary depending on the database contents.
+   ```json
+   {
+     "db": "ok",
+     "notes": 1
+   }
+   ```
 
 6. Stop the containers:
 
@@ -144,7 +143,3 @@ podman compose down -v
 ```
 
 Use `docker compose down -v` if you are using Docker Compose.
-
-
-
-
