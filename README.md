@@ -117,11 +117,13 @@ pytest
 
    `http://localhost:3000/health/db`
 
-   Expected response:
+  
+Expected response:
 
-   ```json
-{"db":"ok","notes":1}   
+```json
+{"db":"ok","notes":1}
 ```
+
 
    The number of notes may vary depending on the database contents.
 
