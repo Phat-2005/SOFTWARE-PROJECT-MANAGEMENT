@@ -39,6 +39,64 @@ Press Ctrl+C to stop.
 ```bash
 pytest
 ```
+## Run with Compose (Week 4)
+
+### Requirements
+
+- Podman 4 or later with a Compose provider, or Docker Desktop.
+- Git installed.
+
+### Start the application
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Phat-2005/SOFTWARE-PROJECT-MANAGEMENT.git
+   cd SOFTWARE-PROJECT-MANAGEMENT
+   ```
+
+2. Create the environment file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Edit `.env` and set `DB_PASSWORD` to a password containing letters and digits only. Do not commit `.env`.
+
+4. Build and start the application and PostgreSQL database:
+
+   ```bash
+   podman compose up --build
+   ```
+
+5. Open http://localhost:3000/health/db.
+
+   Expected response:
+
+   ```json
+   {"db":"ok","notes":2}
+   ```
+
+   The number of notes may differ if the database already contains additional data.
+
+### Stop the application
+
+```bash
+podman compose down
+```
+
+The named database volume is preserved when you stop the stack this way.
+
+### Reset the database
+
+**Warning: This deletes the database volume and its data.**
+
+```bash
+podman compose down -v
+podman compose up --build
+```
+
+The database is initialized again using `db/init.sql`.
 
 ## What is in here
 
