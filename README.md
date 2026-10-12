@@ -120,7 +120,8 @@ pytest
    Expected response:
 
    ```json
-{"db":"ok","notes":1}   ```
+{"db":"ok","notes":1}   
+```
 
    The number of notes may vary depending on the database contents.
 
